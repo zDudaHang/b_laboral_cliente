@@ -1,2 +1,2 @@
-# b_laboral_pwa
-PWA para a laboral do Bridge
+# b_laboral_cliente
+Cliente para Laboral do Laboratório Bridge
