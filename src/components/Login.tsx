@@ -1,4 +1,5 @@
-import { Text, View, Button } from 'react-native'
+import { View } from 'react-native'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 interface LoginProps {
   isLoading: boolean
@@ -9,8 +10,9 @@ export function Login(props: LoginProps) {
   const { handlePress, isLoading } = props
   return (
     <View>
-      <Text>Login</Text>
-      <Button title='Sign in with Google' disabled={isLoading} onPress={handlePress} />
+      <FontAwesome.Button name='google' disabled={isLoading} onPress={handlePress}>
+        Login com Google
+      </FontAwesome.Button>
     </View>
   )
 }
