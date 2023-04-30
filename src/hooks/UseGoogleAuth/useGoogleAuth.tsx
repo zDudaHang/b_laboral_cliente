@@ -3,6 +3,9 @@ import { REACT_APP_GOOGLE_WEB_CLIENT_ID } from '@env'
 import { useEffect, useState } from 'react'
 import { AuthRequestPromptOptions, AuthSessionResult } from 'expo-auth-session'
 import { UserInfo } from './model'
+import { fetchWithAuth } from '../../utils/fetch'
+
+type CreateBridgerDto = Pick<UserInfo, 'email' | 'name' | 'picture'>
 
 interface UseGoogleAuthResult {
   isLoading: boolean
@@ -32,7 +35,20 @@ export function useGoogleAuth(): UseGoogleAuthResult {
           headers: { Authorization: `Bearer ${token}` },
         })
 
-        const user = await response.json()
+        const user = (await response.json()) as UserInfo
+        const bridger: CreateBridgerDto = {
+          email: user.email,
+          name: user.name,
+          picture: user.picture,
+        }
+
+        await fetchWithAuth('bridgers', {
+          method: 'POST',
+          body: JSON.stringify(bridger),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
         setUserInfo(user)
       } catch (error) {
         console.error(error)

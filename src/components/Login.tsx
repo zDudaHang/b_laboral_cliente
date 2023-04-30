@@ -8,6 +8,7 @@ interface LoginProps {
 
 export function Login(props: LoginProps) {
   const { handlePress, isLoading } = props
+
   return (
     <View>
       <FontAwesome.Button name='google' disabled={isLoading} onPress={handlePress}>

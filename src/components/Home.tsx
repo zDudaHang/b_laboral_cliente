@@ -1,19 +1,28 @@
 import { UserInfo } from '../hooks/UseGoogleAuth/model'
 import { Text, View, Image } from 'react-native'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { RootStackParamList } from './navigation/model'
+import FontAwesome from '@expo/vector-icons/build/FontAwesome'
+
+type HomeNavigationProp = NativeStackScreenProps<RootStackParamList, 'Home'>['navigation']
 
 interface HomeProps {
   userInfo: UserInfo
+  navigation: HomeNavigationProp
 }
 
 export function Home(props: HomeProps) {
-  const { userInfo } = props
+  const { userInfo, navigation } = props
 
-  console.log(userInfo.picture)
+  const handlePress = () => navigation.navigate('MarcarPresencas')
 
   return (
     <View>
-      <Text>Olá, {userInfo.name}</Text>
+      <Text>{userInfo?.name}</Text>
       <Image source={{ uri: userInfo.picture }} style={{ width: 96, height: 96 }} />
+      <FontAwesome.Button name='calendar-check-o' onPress={handlePress}>
+        Marcar presenças
+      </FontAwesome.Button>
     </View>
   )
 }
