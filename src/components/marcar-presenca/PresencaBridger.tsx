@@ -1,39 +1,40 @@
-import { Image, View, StyleSheet } from 'react-native'
 import { Bridger } from './model'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { ListItem, Avatar } from 'react-native-elements'
+import { useState } from 'react'
 
 interface PresencaBridgerProps {
   bridger: Bridger
+  onClick: (isPresente: boolean, uuid: string) => void
 }
 
 export function PresencaBridger(props: PresencaBridgerProps) {
   const {
-    bridger: { nomeCompleto, uriFoto },
+    bridger: { nomeCompleto, uriFoto, uuid },
+    onClick,
   } = props
 
+  const [isPresente, setIsPresente] = useState<boolean>(false)
+
+  const handlePress = () => {
+    onClick(!isPresente, uuid)
+    setIsPresente(!isPresente)
+  }
+
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: uriFoto }} style={styles.picture} />
-      <strong>{nomeCompleto}</strong>
-      <FontAwesome.Button name='check-circle' onPress={() => console.log('presente!')}>
-        Presente
-      </FontAwesome.Button>
-    </View>
+    <ListItem bottomDivider>
+      <Avatar rounded source={{ uri: uriFoto }} size='large' />
+      <ListItem.Content>
+        <ListItem.Title>{nomeCompleto}</ListItem.Title>
+        <ListItem.Subtitle>{isPresente ? 'Presente' : 'Faltou'}</ListItem.Subtitle>
+      </ListItem.Content>
+      <ListItem.CheckBox
+        iconType='material-community'
+        checkedIcon='checkbox-marked'
+        uncheckedIcon='checkbox-blank-outline'
+        checked={isPresente}
+        onPress={handlePress}
+        size={32}
+      />
+    </ListItem>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#ffff',
-    alignItems: 'center',
-    rowGap: 2,
-    padding: '1rem',
-  },
-  picture: {
-    width: 96,
-    height: 96,
-    borderRadius: 50,
-  },
-})

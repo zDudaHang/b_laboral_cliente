@@ -4,11 +4,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from './navigation/model'
 import FontAwesome from '@expo/vector-icons/build/FontAwesome'
 
-type HomeNavigationProp = NativeStackScreenProps<RootStackParamList, 'Home'>['navigation']
+type NavigationProp = NativeStackScreenProps<RootStackParamList, 'Home'>['navigation']
 
 interface HomeProps {
   userInfo: UserInfo
-  navigation: HomeNavigationProp
+  navigation: NavigationProp
 }
 
 export function Home(props: HomeProps) {
